@@ -18,7 +18,8 @@ export default function HomePage() {
               <h1 className="text-5xl font-extrabold text-white m-4 animate-typing-loop">Test Your Typing Speed!</h1>
               <p className="text-xl text-start text-gray-200 m-4">Challenge yourself and improve your typing skills!</p>
               <button className="px-6 py-3 w-full lg:w-1/2 m-4 text-white rounded-full text-lg bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 hover:via-blue-600 transition-all duration-500 ease-in-out transform hover:scale-105 cursor-pointer">
-                  Start Test
+                
+                <Link href="/Typing">Start Test</Link>  
               </button>
           </div>
 

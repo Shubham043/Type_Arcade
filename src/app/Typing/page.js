@@ -1,26 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import TypingBox from "../utils/page";  // Import your TypingBox component
 
 export default function TypingTest() {
-  const targetText = "The quick brown fox jumps over the lazy dog.";
-  const [userInput, setUserInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [isTyping, setIsTyping] = useState(false); // State to track if the test is active
+  const [showResults, setShowResults] = useState(false); // State to show results
 
   const handleStartTest = () => {
     setIsTyping(true);
-    setUserInput("");
-    setShowResults(false);
+    setShowResults(false); // Hide results when starting the test
   };
 
   const handleEndTest = () => {
     setIsTyping(false);
-    setShowResults(true);
-  };
-
-  const handleTyping = (e) => {
-    setUserInput(e.target.value);
+    setShowResults(true); // Show results when the test ends
   };
 
   return (
@@ -33,41 +27,34 @@ export default function TypingTest() {
             src="/speedometer.png"
             alt="Speedometer"
           />
-         <button
-  onClick={handleStartTest}
-  className="relative px-6 py-3 text-white font-bold 
-    bg-gradient-to-r from-blue-500 to-purple-600 
-    rounded-none text-sm sm:text-lg cursor-pointer transform transition-all duration-300
-    before:absolute before:inset-0 before:rounded-none before:border-2 before:border-t-4 before:border-r-4 
-    before:border-b-4 before:border-l-4 before:border-solid 
-    before:border-red-500 before:opacity-50 before:blur-sm
-    hover:before:opacity-100 hover:before:blur-none hover:scale-105"
->
-  Start Test
-</button>
+          <button
+            onClick={handleStartTest}
+            className="relative px-6 py-3 text-white font-bold 
+              bg-gradient-to-r from-blue-500 to-purple-600 
+              rounded-none text-sm sm:text-lg cursor-pointer transform transition-all duration-300
+              before:absolute before:inset-0 before:rounded-none before:border-2 before:border-t-4 before:border-r-4 
+              before:border-b-4 before:border-l-4 before:border-solid 
+              before:border-red-500 before:opacity-50 before:blur-sm
+              hover:before:opacity-100 hover:before:blur-none hover:scale-105"
+          >
+            Start Test
+          </button>
 
+          {/* Typing Box */}
+          {isTyping && < TypingBox className = " w-full" />}
 
-          {isTyping && (
-            <textarea
-              className="w-full h-1/3 p-4  text-lg leading-6 bg-gray-800 text-white rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              placeholder={targetText}
-              value={userInput}
-              onChange={handleTyping}
-            />
-          )}
-<button
-  onClick={handleEndTest}
-  className="relative px-6 py-3 text-white font-bold 
-    bg-gradient-to-r from-blue-500 to-purple-600 
-    rounded-none text-sm sm:text-lg cursor-pointer transform transition-all duration-300
-    before:absolute before:inset-0 before:rounded-none before:border-2 before:border-t-4 before:border-r-4 
-    before:border-b-4 before:border-l-4 before:border-solid 
-    before:border-red-500 before:opacity-50 before:blur-sm
-    hover:before:opacity-100 hover:before:blur-none hover:scale-105"
->
-  End Test
-</button>
-
+          <button
+            onClick={handleEndTest}
+            className="relative px-6 py-3 text-white font-bold 
+              bg-gradient-to-r from-blue-500 to-purple-600 
+              rounded-none text-sm sm:text-lg cursor-pointer transform transition-all duration-300
+              before:absolute before:inset-0 before:rounded-none before:border-2 before:border-t-4 before:border-r-4 
+              before:border-b-4 before:border-l-4 before:border-solid 
+              before:border-red-500 before:opacity-50 before:blur-sm
+              hover:before:opacity-100 hover:before:blur-none hover:scale-105"
+          >
+            End Test
+          </button>
         </div>
 
         {/* Right Section */}
