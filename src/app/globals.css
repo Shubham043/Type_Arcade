@@ -68,15 +68,42 @@
 /* styles.css or Tailwind's @layer */
 @keyframes rocketMove {
   0% {
-    transform: translateY(0); 
+    transform: translateY(-35vh); 
   }
-  
+  50%{
+
+    transform: translateY(-35.5vh); 
+  }
   100% {
-    transform: translateY(-100vh); 
+    transform: translateY(-35vh) ;
   }
 }
 
 .rocket-animate {
-  animation: rocketMove 1.5s infinite linear;
+  animation: rocketMove 2.5s infinite forwards ease-in-out;
 }
-  
+@keyframes spaceMove {
+  0% {
+    transform: translateY(-100vh); 
+    opacity: 10;
+  }
+  100% {
+    transform: translateY(0vh) ;
+    opacity: 0;
+  }
+}
+.space-animate1 {
+  animation: spaceMove 2.5s infinite forwards ease-in-out;
+}
+.space-animate2 {
+  animation: spaceMove 2s infinite forwards ease-in-out;
+}
+.space-animate3 {
+  animation: spaceMove 1s infinite forwards ease-in-out;
+}
+
+.navbar-icon{
+color: white;
+text-align: center;
+border:2px solid black ;
+}
