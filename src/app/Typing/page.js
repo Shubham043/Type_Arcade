@@ -87,7 +87,7 @@ export default function TypingTest() {
         {isTyping && (
           
           <img
-            className="space-animate3 w-40 absolute bottom-0 right-60 transform rounded-md"
+            className="space-animate w-40 absolute bottom-0 right-60 transform rounded-md"
             src="/space1.png"
             style={{
               animationDuration: `${animationDuration}s`,
@@ -109,7 +109,7 @@ export default function TypingTest() {
          {isTyping && (
           
           <img
-            className="space-animate2 w-40 absolute bottom-0 right-20 transform rounded-md"
+            className="space-animate w-40 absolute bottom-0 right-20 transform rounded-md"
             src="/space1.png"
             style={{
               animationDuration: `${animationDuration}s`,
@@ -120,7 +120,7 @@ export default function TypingTest() {
         {isTyping && (
           
           <img
-            className="space-animate1 w-40 absolute bottom-0 right-80 transform rounded-md"
+            className="space-animate w-40 absolute bottom-0 right-80 transform rounded-md"
             src="/space1.png"
             style={{
               animationDuration: `${animationDuration}s`,

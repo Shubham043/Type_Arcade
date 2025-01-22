@@ -92,15 +92,10 @@
     opacity: 0;
   }
 }
-.space-animate1 {
+.space-animate{
   animation: spaceMove 2.5s infinite forwards ease-in-out;
 }
-.space-animate2 {
-  animation: spaceMove 2s infinite forwards ease-in-out;
-}
-.space-animate3 {
-  animation: spaceMove 1s infinite forwards ease-in-out;
-}
+
 
 .navbar-icon{
 color: white;
