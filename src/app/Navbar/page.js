@@ -1,14 +1,25 @@
-export default function navbar(){
-    return(
-        <div className="bg-transparent">
-            <ul className="bg-transparent p-2 flex flex-row gap-4 justify-end items-center cursor-pointer">
-                <li className="text-white text-center border rounded-md p-2">
-                <Link href="/"> Home </Link></li>
-                <li className="text-white text-center border rounded-md p-2"><Link href="/Login"> Login </Link></li>
-                <li className="text-white text-center border rounded-md p-2"><Link href="/Typing"> Typing</Link></li>
-                <li className="text-white text-center border rounded-md p-2"><Link href="/LeaderBoard"> LeaderBoard </Link></li>
-                <li className="text-white text-center border rounded-md p-2"><Link href="/Login"> Login </Link></li>
-            </ul>
-        </div>
-    )
+import Link from 'next/link'; // or { Link } from 'react-router-dom'
+
+export default function Navbar() {
+  return (
+    <div className="bg-transparent shadow-lg">
+      <ul className="p-2 flex flex-row gap-6 justify-end items-center">
+        <li className="gaming-link">
+          <Link href="/">Home</Link>
+        </li>
+        <li className="gaming-link">
+          <Link href="/Login">Login</Link>
+        </li>
+        <li className="gaming-link">
+          <Link href="/Typing">Typing</Link>
+        </li>
+        <li className="gaming-link">
+          <Link href="/LeaderBoard">LeaderBoard</Link>
+        </li>
+        <li className="gaming-link">
+          <Link href="/Profile">Profile</Link>
+        </li>
+      </ul>
+    </div>
+  );
 }

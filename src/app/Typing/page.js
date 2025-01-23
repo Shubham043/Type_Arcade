@@ -38,7 +38,7 @@ export default function TypingTest() {
           />
           <button
             onClick={handleStartTest}
-            className="relative px-6 py-3 text-white font-bold
+            className="relative px-6 py-3 text-white font-bold border rounded-lg
               hover:before:opacity-100 hover:before:blur-none hover:scale-105"
           >
             Start Test
@@ -49,7 +49,7 @@ export default function TypingTest() {
 
           <button
             onClick={handleEndTest}
-            className="relative px-6 py-3 text-white font-bold
+            className="relative px-6 py-3 text-white font-bold border rounded-lg
               hover:before:opacity-100 hover:before:blur-none hover:scale-105"
           >
             End Test

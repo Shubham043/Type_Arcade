@@ -1,3 +1,5 @@
+import Navbar from "../Navbar/page";
+
 export default function LeaderBoard() {
     const players = [
       { rank: 1, name: "PlayerOne", score: 12345 },
@@ -8,7 +10,8 @@ export default function LeaderBoard() {
     ];
   
     return (
-      <div className="w-full h-screen bg-gradient-to-r from-gray-900 to-black flex items-center justify-center">
+      <div className="w-full h-screen bg-gradient-to-r from-gray-900 to-black flex flex-col items-center justify-center">
+                    <div>  <Navbar/> </div>    
         <div className="w-11/12 lg:w-2/3 bg-gradient-to-b from-gray-800 to-gray-900 p-6 rounded-lg shadow-lg">
           <h1 className="text-4xl font-bold text-white text-center mb-6">Leaderboard</h1>
           <div className="overflow-hidden border border-gray-700 rounded-lg">
