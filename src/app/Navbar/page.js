@@ -8,10 +8,10 @@ export default function Navbar() {
           <Link href="/">Home</Link>
         </li>
         <li className="gaming-link">
-          <Link href="/Login">Login</Link>
+          <Link href="/Typing">Typing</Link>
         </li>
         <li className="gaming-link">
-          <Link href="/Typing">Typing</Link>
+          <Link href="/Login">Arcade</Link>
         </li>
         <li className="gaming-link">
           <Link href="/LeaderBoard">LeaderBoard</Link>

@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 
-const TypingBox = ({ setWpm ,setanimationDuration}) => {
-  const targetText = "The quick brown fox jumps over the lazy dog.";
+const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,target_text}) => {
+  const targetText = target_text;
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState(null);
   const maxDuration = 15000;
@@ -18,8 +18,22 @@ const TypingBox = ({ setWpm ,setanimationDuration}) => {
     }
 
     if (startTime) {
-      const elapsedTimeInMinutes = (Date.now() - startTime) / 60000;
-      if(elapsedTimeInMinutes >maxDuration) return;
+      const elapsedTime = Date.now() - startTime; 
+
+      if (elapsedTime > maxDuration) {
+        let wrongWords = 0;
+      
+      for (let index = 0; index < targetText.length; index++) {
+        if (input[index] !== targetText[index]) wrongWords++;
+      }
+      
+      const calculatedAccuracy = Math.floor(((targetText.length - wrongWords) / targetText.length) * 100);
+      setAccuracy(calculatedAccuracy);
+      setIsTyping(false); 
+        return;
+      }
+
+      const elapsedTimeInMinutes = elapsedTime / 60000; 
       const typedWords = input.trim().split(/\s+/).length;
       const currWpm = Math.floor(typedWords / elapsedTimeInMinutes);
       if(currWpm<=50) setanimationDuration(3);   
