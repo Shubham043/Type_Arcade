@@ -78,7 +78,7 @@ export default function Profile() {
                 <th className="p-4 text-lg">Date</th>
                 <th className="p-4 text-lg">Wpm</th>
                 <th className="p-4 text-lg">Accuracy</th>
-                <th className="p-4 text-lg">duration</th>
+                {/* <th className="p-4 text-lg">duration</th> */}
               </tr>
             </thead>
             <tbody>
