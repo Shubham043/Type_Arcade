@@ -18,7 +18,7 @@ export default function SignUpPage() {
   const handleSubmit = async(e)=> {
     e.preventDefault(); 
     try {
-      const response = await axios.post("http://localhost:8000/auth/signUp",formData);
+      const response = await axios.post("https://typearcade-backend.onrender.com/auth/signUp",formData);
       if(response.status=== 201){
         console.log("signed up successfully",response.data);
         router.push("/Login"); 

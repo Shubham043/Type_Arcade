@@ -2,36 +2,45 @@
 import Error from "next/error";
 import { useState, useEffect, useRef } from "react";
 import TypingBox from "../utils/page";
-import Navbar from "../Navbar/page"; // Import your TypingBox component
+import Navbar from "../Navbar/page"; 
 import axios from "axios";
 
 export default function TypingTest() {
-  const [isTyping, setIsTyping] = useState(false); // State to track if the test is active
-  const [showResults, setShowResults] = useState(false); // State to show results
-  const [wpm, setWpm] = useState(1); // State to hold the WPM value
+  const [isTyping, setIsTyping] = useState(false); 
+  const [showResults, setShowResults] = useState(false);
+  const [wpm, setWpm] = useState(1); 
   const [animationDuration, setanimationDuration] = useState(3);
-  const [timer, setTimer] = useState(15); // Timer in seconds
+  const [timer, setTimer] = useState(0); 
   const [timerDisplay, setTimerDisplay] = useState("00:15"); 
   const [accuracy, setAccuracy] = useState(0)
   const [targetText, setTargetText] = useState("");
-  const audio = useRef(null);
+
+  
+ useEffect(() => {
+  if (timer > 0) {
+    console.log("Timer set:", timer);
+    const timeoutId = setTimeout(() => {
+      handleEndTest();
+    }, timer * 1000); 
+
+    return () => clearTimeout(timeoutId);
+  }
+}, [timer]);
 
   const timerRef = useRef(null);
   const handleStartTest = async () => {
     try {
       const token = localStorage.getItem("jwttoken");
   
-      if(audio.current){
-        audio.current.play();
-      }
+     
       if (!token) {
-        console.log("No token found!");
+        alert("No token found!");
         return;
       }
       // console.log("Token:", token);
 
   
-      const response = await axios.get("http://localhost:8000/test/starttest", {
+      const response = await axios.get("https://typearcade-backend.onrender.com/test/starttest", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -49,9 +58,11 @@ export default function TypingTest() {
         setTimer(15);
       }
     } catch (error) {
+      alert(error);
       console.log("Error starting test:", error.response ? error.response.data : error.message);
     }
   };
+  
   
   const handleEndTest = async () => {
     try {
@@ -62,17 +73,15 @@ export default function TypingTest() {
         console.log("No token found!");
         return;
       }
-      if(audio.current){
-        audio.current.pause();
-      }
+    
       if(accuracy<60) {
         alert("Your accuracy is too low, you can't submit the test");
         return;
       }
   
       const response = await axios.post(
-        "http://localhost:8000/test/submittest",
-        { wpm, accuracy, duration: 15 }, // Ensure duration is a number if needed
+        "https://typearcade-backend.onrender.com/test/submittest",
+        { wpm, accuracy, duration: 15 }, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -97,23 +106,11 @@ export default function TypingTest() {
   };
   
 
-  const firstRender = useRef(true);
 
-  useEffect(() => {
-    if (firstRender.current) {
-      firstRender.current = false;
-      return;
-    }
-  
-    if (!isTyping) {
-      handleEndTest();
-    }
-  }, [isTyping, timer]);
 
   return (
     
     <div className="overflow-hidden w-full h-screen flex flex-col bg-gradient-to-r from-blue-900 to-black relative">
-       <audio ref={audio} src="/raftaarein.mp3" />
       <Navbar />
       <div className="w-screen h-screen flex lg:flex-row items-center justify-center">
         {/* Left Section */}
@@ -140,7 +137,7 @@ export default function TypingTest() {
           <button
             onClick={handleEndTest}
             className={`relative px-6 py-3 text-white font-bold border rounded-lg
-              ${isTyping ? "opacity-100" : "opacity-0"}  hover:before:opacity-100 hover:before:blur-none hover:scale-105 `}
+              ${isTyping ? "opacity-100" : "opacity-0"} hover:before:opacity-100 hover:before:blur-none hover:scale-105 `}
           >
             End Test
           </button>
@@ -202,7 +199,7 @@ export default function TypingTest() {
                 alt=""
               />
             </>
-          )}
+          )} 
         </div>
       </div>
     </div>

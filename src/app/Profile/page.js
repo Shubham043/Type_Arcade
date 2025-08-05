@@ -14,7 +14,7 @@ export default function Profile() {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:8000/auth/getUserProfile", {
+      const response = await axios.get("https://typearcade-backend.onrender.com/auth/getUserProfile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,7 +33,7 @@ export default function Profile() {
   },[]);
 
   if (!profile) {
-    return <div>Loading...</div>; // Show a loading state while profile is being fetched
+    return <div>Loading...</div>; 
   }
 
   return (

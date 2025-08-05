@@ -11,7 +11,7 @@ export default function Navbar() {
           <Link href="/Typing">Typing</Link>
         </li>
         <li className="gaming-link">
-          <Link href="/Login">Arcade</Link>
+          <Link href="/Arcade">Arcade</Link>
         </li>
         <li className="gaming-link">
           <Link href="/LeaderBoard">LeaderBoard</Link>

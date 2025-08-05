@@ -1,4 +1,5 @@
 import './globals.css';
+import { GameProvider } from './context/page.js'; 
 
 export const metadata = {
   title: 'TypeArcade',
@@ -8,7 +9,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <GameProvider>{children}</GameProvider>
+      </body>
     </html>
   );
 }

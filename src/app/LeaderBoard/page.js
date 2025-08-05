@@ -16,7 +16,7 @@ export default function LeaderBoard() {
           return;
         }
         console.log("Token:", token);
-        const response = await axios.get("http://localhost:8000/test/leaderboard", {
+        const response = await axios.get("https://typearcade-backend.onrender.com/test/leaderboard", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -13,7 +13,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
 
-    const response = await axios.post("http://localhost:8000/auth/signIn",{email,password});
+    const response = await axios.post("https://typearcade-backend.onrender.com/auth/signIn",{email,password});
     if(response.status===200){
       console.log(response.data.message, response.data);
       localStorage.setItem("jwttoken",response.data.token)
@@ -62,7 +62,7 @@ export default function LoginPage() {
         {/* Logo Section */}
         <div className="w-full md:w-1/2 lg:w-1/2 flex items-center justify-center mt-6 md:mt-0">
           <img
-            src="/logo.webp"
+            // src="/logo.webp"
             alt="Website Logo"
             className="w-48 h-48 object-contain"
           />
