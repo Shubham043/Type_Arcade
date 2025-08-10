@@ -1,15 +1,17 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, } from "react";
 import axios from "axios";
 import GameContext from "../context/page";
 import MultiTypingBox from "../MultiTyping/page";
 import OpponentTypingBox from "../Opponent/page";
 import Navbar from "../Navbar/page";
 import { targetText } from "../utils/targettext";
+import { useRouter } from "next/navigation";
+
 
 export default function Arcade() {
  const [target_text, settarget_text] = useState("Hey How you doing");
-
+const router = useRouter();
   useEffect(() => {
     const fetchText = async () => {
       const text = await targetText();
@@ -36,7 +38,9 @@ export default function Arcade() {
     joinCompetition,
     setReady,
     opponentScore,
-    sendScore
+    sendScore,
+    resetGame,
+    end_game
   } = useContext(GameContext);
 
   useEffect(() => {
@@ -60,13 +64,13 @@ export default function Arcade() {
   }, []);
 
 
-  const resetGame = () => {
+  const restartGame = () => {
   setWPM(0);
   setAccuracy(0);
   setShowResults(false);
   setTimeLeft(duration);
   setGameRunning(false);
-
+  resetGame();
 };
 
 
@@ -94,11 +98,14 @@ export default function Arcade() {
 }, [isReady, opponentReady]);
 
   const handleFinish = (wpm, acc) => {
- 
     sendScore(wpm);
     setWPM(wpm);
     setAccuracy(acc);
   };
+  const handleend = ()=>{
+    end_game();
+    router.push('/');
+  }
 
   return (
     <div className="relative p-4 overflow-hidden w-full h-screen bg-gradient-to-r from-blue-800 to-black flex flex-col items-center justify-center space-y-6">
@@ -186,10 +193,16 @@ export default function Arcade() {
     </div>
 
     <button
-     onClick={resetGame}
+     onClick={restartGame}
       className="text-white bg-blue-600 hover:bg-blue-700 border p-3 text-xl rounded-md mt-4"
     >
       Restart
+    </button>
+      <button
+     onClick={handleend}
+      className="text-white bg-blue-600 hover:bg-blue-700 border p-3 text-xl rounded-md mt-4"
+    >
+      end_game
     </button>
   </div>
 )}

@@ -59,13 +59,33 @@ export const GameProvider = ({ children }) => {
       }, 1000);
     });
 
-    // NEW: opponent score listener
     newSocket.on("opponent_score", ({ score }) => {
       setGameState((prev) => ({
         ...prev,
         opponentScore: score,
       }));
     });
+
+    newSocket?.on("game-reset", () => {
+    setGameState(prev => ({
+      ...prev,
+      isReady: false,
+      opponentReady: false,
+      gameStarted: false,
+      countdown: null,
+      opponentScore: null
+    }));
+  });
+
+    newSocket.on("opponent-reset",()=>{
+      setGameState((prev)=>({
+        ...prev,
+        opponentReady:false,
+        opponentScore:0
+      }))
+
+      alert("Opponenet Restarted!-----> please Restart or end game")
+    })
 
     return () => {
       newSocket.disconnect();
@@ -86,10 +106,21 @@ export const GameProvider = ({ children }) => {
     socket?.emit("player_score", { score });
   };
 
-  // const getOpponentScore= ()=>{
-  //  const res =  socket.on("get_score");
-  //  setGameState((prev)=> ({...prev,opponentScore:res}));
-  // }
+  const end_game = ()=>{
+    socket?.disconnect();
+  }
+
+  const resetGame = ()=>{
+    socket?.emit("reset-game");
+    setGameState(prev => ({
+    ...prev,
+    isReady: false,
+    opponentReady: false,
+    gameStarted: false,
+    countdown: null,
+    opponentScore: null
+  }));
+  }
 
   return (
     <GameContext.Provider
@@ -98,6 +129,9 @@ export const GameProvider = ({ children }) => {
         joinCompetition,
         setReady,
         sendScore, 
+        resetGame,
+        end_game,
+        
       }}
     >
       {children}
