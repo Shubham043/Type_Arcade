@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function MultiTypingBox({ targetText, gameRunning, timeLeft, onFinish }) {
+export default function OpponentTypingBox({ targetText, gameRunning, timeLeft, onFinish }) {
   const [input, setInput] = useState("");
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function MultiTypingBox({ targetText, gameRunning, timeLeft, onFi
         disabled={!gameRunning}
       />
       <div className="text-right mt-2 text-sm text-indigo-400 font-mono">
-        Time Left: {0}s
+        Time Left: {timeLeft}s
       </div>
     </div>
   );

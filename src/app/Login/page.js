@@ -15,7 +15,6 @@ export default function LoginPage() {
 
     const response = await axios.post("https://typearcade-backend.onrender.com/auth/signIn",{email,password});
     if(response.status===200){
-      console.log(response.data.message, response.data);
       localStorage.setItem("jwttoken",response.data.token)
       router.push("/");
     }

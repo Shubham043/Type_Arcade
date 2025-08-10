@@ -20,7 +20,6 @@ export default function Profile() {
         },
       });
       if (response.status === 200) {
-        console.log(response.data);
         setProfile(response.data);
       }
     } catch (error) {

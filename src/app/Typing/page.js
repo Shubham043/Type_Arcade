@@ -18,7 +18,7 @@ export default function TypingTest() {
   
  useEffect(() => {
   if (timer > 0) {
-    console.log("Timer set:", timer);
+    // console.log("Timer set:", timer);
     const timeoutId = setTimeout(() => {
       handleEndTest();
     }, timer * 1000); 
@@ -34,10 +34,10 @@ export default function TypingTest() {
   
      
       if (!token) {
-        alert("No token found!");
+        alert("Please login first");
+        console.log("no token found")
         return;
       }
-      // console.log("Token:", token);
 
   
       const response = await axios.get("https://typearcade-backend.onrender.com/test/starttest", {
@@ -47,10 +47,8 @@ export default function TypingTest() {
       });
   
       if (response.status === 201) {
-        console.log(response.data);
         
         setTargetText(response.data.mainText);
-        console.log(targetText);
         
         setIsTyping(true);
         setWpm(1);
@@ -70,6 +68,7 @@ export default function TypingTest() {
       //  console.log(token);
        
       if (!token) {
+        alert("Please login first...")
         console.log("No token found!");
         return;
       }

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const targetText = async ()=>{
- 
     try {
       const token = localStorage.getItem("jwttoken");
       if (!token) {
-        alert("No token found!");
+        alert("Please login first!");
+        console.log("No token found");
         return;
       }
 

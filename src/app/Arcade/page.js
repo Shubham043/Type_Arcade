@@ -13,13 +13,12 @@ export default function Arcade() {
   useEffect(() => {
     const fetchText = async () => {
       const text = await targetText();
-      console.log(text)
       if (text) settarget_text(text);
     };
 
     fetchText();
   }, []);
-  const duration = 25;
+  const duration = 15;
   const [timeLeft, setTimeLeft] = useState(duration);
   const [gameRunning, setGameRunning] = useState(false);
   const [WPM, setWPM] = useState(0);
@@ -185,6 +184,13 @@ export default function Arcade() {
     <div className={`mt-4 text-center py-2 rounded-md font-medium ${WPM > opponentScore ? 'bg-cyan-900/30 text-cyan-400' : WPM < opponentScore ? 'bg-purple-900/30 text-purple-400' : 'bg-gray-800 text-gray-400'}`}>
       {WPM > opponentScore ? 'You won!' : WPM < opponentScore ? `${opponent} won!` : 'Tie game!'}
     </div>
+
+    <button
+     onClick={resetGame}
+      className="text-white bg-blue-600 hover:bg-blue-700 border p-3 text-xl rounded-md mt-4"
+    >
+      Restart
+    </button>
   </div>
 )}
 

@@ -20,11 +20,10 @@ export default function SignUpPage() {
     try {
       const response = await axios.post("https://typearcade-backend.onrender.com/auth/signUp",formData);
       if(response.status=== 201){
-        console.log("signed up successfully",response.data);
         router.push("/Login"); 
       }
       else {
-      console.log("Signup failed. Please try again.");
+      alert("Signup failed. Please try again.");
       }
     } catch (error) {
       console.error("Error signing up:", error);

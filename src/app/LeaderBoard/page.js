@@ -13,9 +13,9 @@ export default function LeaderBoard() {
         const token = localStorage.getItem("jwttoken");
         if (!token) {
           console.log("No token found!");
+          alert("Please login first")
           return;
         }
-        console.log("Token:", token);
         const response = await axios.get("https://typearcade-backend.onrender.com/test/leaderboard", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -23,7 +23,6 @@ export default function LeaderBoard() {
         });
 
         if (response.status === 200) {
-          console.log(response.data);
           setLeaderboard(response.data);
         }
       } catch (error) {
@@ -32,7 +31,7 @@ export default function LeaderBoard() {
     };
 
     getleaderboard();
-  }, []); // Empty dependency array ensures it runs only once
+  }, []); 
 
   return (
     <div className="w-full h-screen bg-gradient-to-r from-gray-900 to-black flex flex-col items-center justify-center">

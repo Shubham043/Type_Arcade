@@ -1,9 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function MultiTypingBox({ targetText, gameRunning, timeLeft, onFinish }) {
+export default function MultiTypingBox({ restartKey, targetText, gameRunning, timeLeft, onFinish }) {
   const [input, setInput] = useState("");
 
+  // ⛳ Run only when test ends
   useEffect(() => {
     if (!gameRunning) {
       if (input.length > 0) {
