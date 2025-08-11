@@ -3,36 +3,79 @@
 import { useEffect, useState } from "react";
 import Navbar from "../Navbar/page";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
-  const getuserprofile = async () => {
+  const handleLogout = () => {
+    localStorage.removeItem('jwttoken');
+    router.push('/Login'); 
+  };
+
+  const getUserProfile = async () => {
     const token = localStorage.getItem("jwttoken");
+    
     if (!token) {
-      console.log("No token found!");
+      setError("No authentication token found");
+      setLoading(false);
+      router.push('/Login');
       return;
     }
+
     try {
-      const response = await axios.get("https://typearcade-backend.onrender.com/auth/getUserProfile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      setLoading(true);
+      const response = await axios.get(
+        "https://typearcade-backend.onrender.com/auth/getUserProfile",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          timeout: 5000 
+        }
+      );
+
       if (response.status === 200) {
         setProfile(response.data);
       }
     } catch (error) {
-      console.log("Error getting user profile:", error.response ? error.response.data : error.message);
+      console.error("Profile fetch error:", error);
+      setError(error.response?.data?.message || "Failed to load profile");
+      if (error.response?.status === 401) {
+        handleLogout(); 
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getuserprofile();
-  },[]);
+    getUserProfile();
+  }, []);
 
-  if (!profile) {
-    return <div>Loading...</div>; 
+  if (loading) {
+    return (
+      <div className="w-full h-screen bg-gradient-to-r from-blue-800 to-black flex items-center justify-center">
+        <div className="text-white text-2xl">Loading profile...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full h-screen bg-gradient-to-r from-blue-800 to-black flex flex-col items-center justify-center">
+        <div className="text-red-400 text-xl mb-4">{error}</div>
+        <button 
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 bg-blue-500 text-white rounded"
+        >
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -42,8 +85,16 @@ export default function Profile() {
         <Navbar />
       </div>
 
+      {/* Logout Button */}
+      <button
+        onClick={handleLogout}
+        className="absolute top-12 right-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+      >
+        Log Out
+      </button>
+
       {/* Profile Section */}
-      <div className="w-11/12 h-3/4 lg:w-2/3 bg-gradient-to-b from-gray-800 to-gray-900 p-6 rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
+          <div className="w-11/12 h-3/4 lg:w-2/3 bg-gradient-to-b from-gray-800 to-gray-900 p-6 rounded-lg shadow-lg overflow-y-auto max-h-[90vh]">
         {/* Profile Header */}
         <div className="flex items-center gap-6 mb-8">
           <img

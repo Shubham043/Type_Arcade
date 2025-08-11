@@ -1,21 +1,25 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Preloader from "../utils/Preloader";
 import axios from "axios";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const[isLoading,setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const router = useRouter();
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
 
     const response = await axios.post("https://typearcade-backend.onrender.com/auth/signIn",{email,password});
     if(response.status===200){
       localStorage.setItem("jwttoken",response.data.token)
+      setIsLoading(false);
       router.push("/");
     }
      else {
@@ -30,6 +34,7 @@ export default function LoginPage() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gradient-to-r from-indigo-900 to-black">
+       {isLoading && <Preloader />}
       <div className="w-full max-w-screen-md p-8 h-auto flex flex-col md:flex-col lg:flex-row items-center justify-between rounded-lg bg-yellow-500/10 shadow-lg">
         {/* Form Section */}
         <div className="w-full md:w-1/2 lg:w-1/2">
@@ -61,7 +66,7 @@ export default function LoginPage() {
         {/* Logo Section */}
         <div className="w-full md:w-1/2 lg:w-1/2 flex items-center justify-center mt-6 md:mt-0">
           <img
-            // src="/logo.webp"
+            src="/logo.webp"
             alt="Website Logo"
             className="w-48 h-48 object-contain"
           />

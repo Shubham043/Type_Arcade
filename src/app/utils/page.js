@@ -6,7 +6,7 @@ const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,targ
   if(!setanimationDuration) setanimationDuration = 0;
   
   
-  const targetText = "Hii I am a good person what do you think about me i'm not but im good can you add more words"; 
+  const targetText = target_text + "Hii I am a good person what do you think about me i'm not but im good can you add more words"; 
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState(null);
   const maxDuration = 15000;
@@ -23,7 +23,7 @@ const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,targ
 
     if (startTime) {
       const elapsedTime = Date.now() - startTime; 
-
+      //  console.log(elapsedTime)
       if (elapsedTime > maxDuration) {
         let wrongWords = 0;
       
@@ -32,6 +32,7 @@ const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,targ
         }
       
         const calculatedAccuracy = Math.floor(((targetText.length - wrongWords) / targetText.length) * 100);
+        console.log(calculatedAccuracy)
         setAccuracy(calculatedAccuracy);
         setIsTyping(false); 
         return;
