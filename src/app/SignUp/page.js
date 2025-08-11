@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 import Preloader from "../utils/Preloader";
 
 export default function SignUpPage() {
@@ -84,6 +85,9 @@ export default function SignUpPage() {
               minLength={6}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
+            <h4>Already Have an Account! 
+             <Link className=" ml-2 text-blue-500" href="/Login"> Login Here</Link>
+            </h4>
 
             <button
               type="submit"

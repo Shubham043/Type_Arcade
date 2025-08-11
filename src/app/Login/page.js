@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Preloader from "../utils/Preloader";
+import Link from "next/link";
 import axios from "axios";
 
 export default function LoginPage() {
@@ -54,6 +55,10 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 input-fire"
             />
+
+             <h4>Don't Have an Account! 
+             <Link className=" ml-2 text-blue-500" href="/SignUp"> SignUp Here</Link>
+            </h4>
             <button
               type="submit"
               className="w-full bg-green-500 px-4 py-2 mt-4 text-white font-semibold rounded-md hover:bg-green-600 focus:ring-2 focus:ring-green-400"
