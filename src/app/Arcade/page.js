@@ -192,18 +192,21 @@ const router = useRouter();
       {WPM > opponentScore ? 'You won!' : WPM < opponentScore ? `${opponent} won!` : 'Tie game!'}
     </div>
 
-    <button
-     onClick={restartGame}
-      className="text-white bg-blue-600 hover:bg-blue-700 border p-3 text-xl rounded-md mt-4"
-    >
-      Restart
-    </button>
-      <button
-     onClick={handleend}
-      className="text-white bg-blue-600 hover:bg-blue-700 border p-3 text-xl rounded-md mt-4"
-    >
-      end_game
-    </button>
+    <div className="flex flex-wrap gap-4 mt-6">
+  <button
+    onClick={restartGame}
+    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+  >
+    Restart Game
+  </button>
+  
+  <button
+    onClick={handleend}
+    className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50"
+  >
+    End Game
+  </button>
+</div>
   </div>
 )}
 

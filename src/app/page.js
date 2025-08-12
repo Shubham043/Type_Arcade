@@ -11,19 +11,6 @@ export default function HomePage() {
     message: "",
     type: "error" 
   });
-
-  const handleStart = (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("jwttoken");
-    
-    if (token) {
-      router.push('/Typing');
-    } else {
-      showNotification("Please login first to start typing!");
-      setTimeout(() => router.push('/Login'), 2000);
-    }
-  };
-
   const showNotification = (message, type = "error") => {
     setNotification({
       show: true,
@@ -31,6 +18,23 @@ export default function HomePage() {
       type
     });
   };
+
+ const handleStart = (e) => {
+  e.preventDefault();
+  const token = localStorage.getItem("jwttoken");
+  
+  if (token) {
+    router.push('/Typing');
+  } else {
+    showNotification("Please login first to start typing!");
+    setTimeout(() => {
+      if (!localStorage.getItem("jwttoken")) {
+        router.push('/Login');
+      }
+    }, 2000);
+  }
+};
+
 
   return (
     <div className="w-full h-full flex flex-col lg:flex-row md:flex-col items-center justify-center bg-gradient-to-r from-indigo-900 to-black relative">

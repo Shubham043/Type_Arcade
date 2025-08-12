@@ -14,7 +14,7 @@ export default function TypingTest() {
     const [wpm, setWpm] = useState(1);
     const [animationDuration, setanimationDuration] = useState(3);
     const [timer, setTimer] = useState(0);
-    const [timerDisplay, setTimerDisplay] = useState(15);
+    const [timerDisplay, setTimerDisplay] = useState(30);
     const [accuracy, setAccuracy] = useState(70);
     const [targetText, setTargetText] = useState("");
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function TypingTest() {
     const [showpage, setshowpage] = useState(false)
 
     useEffect(() => {
-        if (!auth()) {
+        if (!auth) {
             setNotificationMessage("Please login first to start typing!");
             setShowNotification(true);
             setshowpage(false)
@@ -79,12 +79,12 @@ export default function TypingTest() {
             );
 
             if (response.status === 201) {
+                console.log(response)
                 setTargetText(response.data.mainText);
-
                 setIsTyping(true);
                 setWpm(1);
                 setShowResults(false);
-                setTimer(15);
+                setTimer(30);
             }
         } catch (error) {
             alert(error);
@@ -114,7 +114,7 @@ export default function TypingTest() {
 
             const response = await axios.post(
                 "https://typearcade-backend.onrender.com/test/submittest",
-                { wpm, accuracy, duration: 15 },
+                { wpm, accuracy, duration: 30 },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

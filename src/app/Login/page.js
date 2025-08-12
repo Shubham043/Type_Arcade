@@ -8,6 +8,7 @@ import axios from "axios";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const[isLoading,setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
   const [password, setPassword] = useState("");
   const router = useRouter();
 
@@ -16,20 +17,19 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     try {
-
     const response = await axios.post("https://typearcade-backend.onrender.com/auth/signIn",{email,password});
     if(response.status===200){
       localStorage.setItem("jwttoken",response.data.token)
+      console.log(response.data)
       setIsLoading(false);
       router.push("/");
     }
-     else {
-      alert("Login failed. Please try again.");
     }
-    }
- catch (error) {
-  console.log("Error occured", error);
-  
+   catch (error) {
+    setError(error.response?.data?.error || "Signup failed. Please try again.");
+   }
+ finally{
+  setIsLoading(false);
  }
   };
 
@@ -38,6 +38,11 @@ export default function LoginPage() {
        {isLoading && <Preloader />}
       <div className="w-full max-w-screen-md p-8 h-auto flex flex-col md:flex-col lg:flex-row items-center justify-between rounded-lg bg-yellow-500/10 shadow-lg">
         {/* Form Section */}
+         {error && (
+            <div className="mb-4 p-2 bg-red-100 text-red-700 rounded-md">
+              {error}
+            </div>
+          )}
         <div className="w-full md:w-1/2 lg:w-1/2">
           <h1 className="text-2xl font-bold text-center text-white mb-8">Login Here!</h1>
           <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center gap-4 my-2">

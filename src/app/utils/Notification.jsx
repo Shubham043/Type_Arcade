@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 
 export default function Notification({ message, type = "error", onClose }) {
+  console.log("HII im notifcation")
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {

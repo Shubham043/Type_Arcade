@@ -9,6 +9,7 @@ export default function SignUpPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showemailtext, setshowemailtext] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -31,13 +32,16 @@ export default function SignUpPage() {
       );
       
       if (response.status === 201) {
+        setshowemailtext(true);
         console.log(response)
         setIsLoading(false);
-        router.push("/Login");
+        // router.push("/Login");
       }
     } catch (error) {
-      console.error("Error signing up:", error);
-      setError(error.response?.data?.message || "Signup failed. Please try again.");
+      console.log("In Catch block----->",error.response.data.error)
+
+      // console.error("Error signing up:", error.response.data.error);
+      setError(error.response?.data?.error || "Signup failed. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -85,6 +89,7 @@ export default function SignUpPage() {
               minLength={6}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
+
             <h4>Already Have an Account! 
              <Link className=" ml-2 text-blue-500" href="/Login"> Login Here</Link>
             </h4>
@@ -98,6 +103,11 @@ export default function SignUpPage() {
             >
               {isLoading ? "Processing..." : "Submit"}
             </button>
+            {showemailtext && (
+  <div className="mb-4 p-2 bg-green-100 text-green-800 rounded-md">
+    Verification email sent to your email.Please verify!
+  </div>
+)}
           </form>
         </div>
 
