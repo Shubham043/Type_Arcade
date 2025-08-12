@@ -6,6 +6,7 @@ import Navbar from "../Navbar/page";
 import axios from "axios";
 import { auth } from "../utils/auth";
 import { useRouter } from "next/navigation";
+import Notification from "../utils/Notification";
 
 export default function TypingTest() {
     const [isTyping, setIsTyping] = useState(false);
@@ -18,14 +19,18 @@ export default function TypingTest() {
     const [targetText, setTargetText] = useState("");
     const router = useRouter();
     const [showNotification, setShowNotification] = useState(false);
+    const [NotificationType, setNotificationType] = useState("info")
     const [NotificationMessage, setNotificationMessage] = useState("");
+    const [showpage, setshowpage] = useState(false)
 
     useEffect(() => {
-        if (!auth) {
+        if (!auth()) {
             setNotificationMessage("Please login first to start typing!");
             setShowNotification(true);
-            setTimeout(() => router.push("/Login"), 2000);
+            setshowpage(false)
+            router.push('/Login')
         }
+        
     }, []);
     const timerRef = useRef(null);
 
