@@ -19,10 +19,19 @@ export default function TypingTest() {
     const [targetText, setTargetText] = useState("");
     const router = useRouter();
     const [showNotification, setShowNotification] = useState(false);
+    const [start, setstart] = useState(false)
     const [NotificationType, setNotificationType] = useState("info")
     const [NotificationMessage, setNotificationMessage] = useState("");
     const [showpage, setshowpage] = useState(false)
-
+    const wpmRef = useRef(1)
+    const accuracyref = useRef(10)
+    const timerRef = useRef(null);
+     const updateWpm = (newWpm,newaccuray) => {
+        setWpm(newWpm);
+        setAccuracy(newaccuray)
+        wpmRef.current = newWpm;
+        accuracyref.current = newaccuray
+    };
     useEffect(() => {
         if (!auth) {
             setNotificationMessage("Please login first to start typing!");
@@ -32,19 +41,21 @@ export default function TypingTest() {
         }
         
     }, []);
-    const timerRef = useRef(null);
 
     useEffect(() => {
-        if (timer > 0 && isTyping) {
+        if (timer > 0 && isTyping && start) {
             if (timerRef.current) clearInterval(timerRef.current);
 
             setTimerDisplay(timer);
 
             timerRef.current = setInterval(() => {
                 setTimerDisplay((prev) => {
-                    if (prev <= 1) {
+                    console.log(prev);
+                    if (prev <= 0) {
                         clearInterval(timerRef.current);
-                        handleEndTest();
+                        console.log("I'm Wpm from useeffect------>",wpmRef.current,accuracyref.current)
+                        setstart(false)
+                        handleEndTest(wpmRef.current,accuracyref.current);
                         return 0;
                     }
                     return prev - 1;
@@ -55,9 +66,9 @@ export default function TypingTest() {
         return () => {
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [timer, isTyping]);
+    }, [start]);
 
-    const handleStartTest = async () => {
+    const handleStartTest = async (wpm,accuracy) => {
         try {
             const token = localStorage.getItem("jwttoken");
 
@@ -95,22 +106,22 @@ export default function TypingTest() {
         }
     };
 
-    const handleEndTest = async () => {
+    const handleEndTest = async (wpm,accuracy) => {
         try {
             const token = localStorage.getItem("jwttoken");
             setTargetText("");
-
+            console.log("I'm wpm from handleendtest---->",wpm);
             if (!token) {
-                setNotificationMessage("Please login first to start typing!");
+                setNotificationMessage("Please login first to Finish typing test!");
                 setShowNotification(true);
                 setTimeout(() => router.push("/Login"), 2000);
                 return;
             }
 
-            if (accuracy < 0) {
-                alert("Your accuracy is too low, you can't submit the test");
-                return;
-            }
+            // if (accuracy < 0) {
+            //     alert("Your accuracy is too low, you can't submit the test");
+            //     return;
+            // }
 
             const response = await axios.post(
                 "https://typearcade-backend.onrender.com/test/submittest",
@@ -124,7 +135,7 @@ export default function TypingTest() {
 
             if (response.status === 201) {
                 console.log("Test submitted successfully:", response.data);
-
+                setstart(false)
                 setIsTyping(false);
                 setanimationDuration(3);
                 setShowResults(true);
@@ -167,11 +178,13 @@ export default function TypingTest() {
                     {/* Typing Box */}
                     {isTyping && (
                         <TypingBox
-                            setWpm={setWpm}
+                            handleEndTest={handleEndTest}
+                            updateWpm={updateWpm}
                             setanimationDuration={setanimationDuration}
                             setIsTyping={setIsTyping}
                             setAccuracy={setAccuracy}
                             target_text={targetText}
+                            setstart = {setstart}
                             
                         />
                     )}
@@ -299,7 +312,7 @@ export default function TypingTest() {
 
                     {/* Timer Box */}
                     {isTyping && (
-    <div className="absolute left-5 top-40  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm p-4 max-w-md mx-auto transition-all duration-300">
+    <div className="absolute left-5 top-20  bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm p-4 max-w-md mx-auto transition-all duration-300">
         <div className="flex items-center space-x-3">
             {/* Typing indicator dots */}
             <div className="flex space-x-1">

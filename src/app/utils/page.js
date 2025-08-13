@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from "react";
 
-const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,target_text }) => {
+const TypingBox = ({ updateWpm ,setanimationDuration, setIsTyping, setAccuracy,target_text,setstart }) => {
   if(!setanimationDuration) setanimationDuration = 0;
   
   
-  const targetText = target_text + "Hii I am a good person what do you think about me i'm not but im good can you add more words"; 
+  const targetText = target_text + " Wonder why the sky turns orange at sunset when the air is filled with fine dust and water droplets the light from the sun scatters in a way that removes the shorter blue wavelengths leaving behind warm reds and oranges it is a beautiful reminder that even endings can be bright and peaceful much like how the end of a busy day can feel calm when you pause and watch the colors change above you"; 
   const [input, setInput] = useState("");
   const [startTime, setStartTime] = useState(null);
-  const maxDuration = 15000;
+  const maxDuration = 30000;
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -19,36 +19,45 @@ const TypingBox = ({ setWpm ,setanimationDuration, setIsTyping, setAccuracy,targ
   useEffect(() => {
     if (!startTime && input.length > 0) {
       setStartTime(Date.now()); 
+      setstart(true);
     }
-
     if (startTime) {
       const elapsedTime = Date.now() - startTime; 
       //  console.log(elapsedTime)
-      if (elapsedTime > maxDuration) {
-        let wrongWords = 0;
+     if (elapsedTime >= maxDuration) {
+    let wrongChars = 0;
+    const compareLength = input.length; // Only check up to what was typed
+    console.log(compareLength)
+    for (let index = 0; index < compareLength; index++) {
+        if (input[index] !== targetText[index]) wrongChars++;
+    }
+    
+    const accuracy = compareLength === 0 ? 0 : Math.floor(((compareLength - wrongChars) / compareLength) * 100);
+    
+    const typedChars = input.length;
+    const typedWords = typedChars / 5;
+    const elapsedTimeInMinutes = maxDuration / 60000;
+    const wpm = Math.floor(typedWords / elapsedTimeInMinutes);
+    
+    console.log("Final WPM:", wpm, "Accuracy:", accuracy);
+    
+    setAccuracy(accuracy);
+    updateWpm(wpm,accuracy);
+    setIsTyping(false);
+    return;
+}
       
-        for (let index = 0; index < targetText.length; index++) {
-          if (input[index] !== targetText[index]) wrongWords++;
-        }
-      
-        const calculatedAccuracy = Math.floor(((targetText.length - wrongWords) / targetText.length) * 100);
-        console.log(calculatedAccuracy)
-        setAccuracy(calculatedAccuracy);
-        setIsTyping(false); 
-        return;
-      }
-
       const elapsedTimeInMinutes = elapsedTime / 60000; 
       const typedWords = input.trim().split(/\s+/).length;
       const currWpm = Math.floor(typedWords / elapsedTimeInMinutes);
-      if(currWpm <= 50) setanimationDuration(3);   
-      if(currWpm > 50) setanimationDuration(1.5);
+      if(currWpm <= 40) setanimationDuration(3);   
+      if(currWpm > 40) setanimationDuration(1.5);
       if(currWpm > 60) setanimationDuration(1);
       if(currWpm > 70) setanimationDuration(0.5);
       if(currWpm > 80) setanimationDuration(0.3);
       if(currWpm > 100) setanimationDuration(0.1);
 
-      setWpm(currWpm);
+      updateWpm(currWpm,0);
     }
   }, [input]);
 

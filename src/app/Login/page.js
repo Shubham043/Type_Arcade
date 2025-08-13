@@ -14,6 +14,7 @@ export default function LoginPage() {
 
   // Handle form submission
   const handleSubmit = async (e) => {
+    console.log("im in login--->")
     e.preventDefault();
     setIsLoading(true);
     try {
