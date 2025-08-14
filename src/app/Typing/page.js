@@ -118,10 +118,10 @@ export default function TypingTest() {
                 return;
             }
 
-            // if (accuracy < 0) {
-            //     alert("Your accuracy is too low, you can't submit the test");
-            //     return;
-            // }
+            if (accuracy < 40) {
+                alert("Your accuracy is too low, you can't submit the test");
+                return;
+            }
 
             const response = await axios.post(
                 "https://typearcade-backend.onrender.com/test/submittest",

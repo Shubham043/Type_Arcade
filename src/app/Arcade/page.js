@@ -7,25 +7,29 @@ import OpponentTypingBox from "../Opponent/page";
 import Navbar from "../Navbar/page";
 import { targetText } from "../utils/targettext";
 import { useRouter } from "next/navigation";
-
+import generateTypingText from "../utils/targettext";
 
 export default function Arcade() {
  const [target_text, settarget_text] = useState("Hey How you doing");
 const router = useRouter();
-  useEffect(() => {
-    const fetchText = async () => {
-      const text = await targetText();
-      if (text) settarget_text(text);
-    };
+const duration = 30;
+const [timeLeft, setTimeLeft] = useState(duration);
+const [gameRunning, setGameRunning] = useState(false);
+const [WPM, setWPM] = useState(0);
+const [accuracy, setAccuracy] = useState(0);
+const [showResults, setShowResults] = useState(false);
+useEffect(() => {
+  const fetchText = async () => {
+    const text = await targetText();
+    if (text) settarget_text(text);
+    else {
+    const text1 = generateTypingText("easy",30);
+    if(text1) settarget_text(text1);
+    }
+  };
 
-    fetchText();
-  }, []);
-  const duration = 15;
-  const [timeLeft, setTimeLeft] = useState(duration);
-  const [gameRunning, setGameRunning] = useState(false);
-  const [WPM, setWPM] = useState(0);
-  const [accuracy, setAccuracy] = useState(0);
-  const [showResults, setShowResults] = useState(false);
+  fetchText();
+}, []);
 
   const {
     username,
