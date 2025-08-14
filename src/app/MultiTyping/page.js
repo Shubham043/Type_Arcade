@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function MultiTypingBox({ targetText, gameRunning, timeLeft, onFinish }) {
-   const [input, setInput] = useState("");
+  if(!targetText) targetText = "Hey text is not available yet but you can adjust";
+  const [input, setInput] = useState("");
   const textref = useRef();
   
   useEffect(() => {
